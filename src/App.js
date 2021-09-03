@@ -62,7 +62,6 @@ function App() {
   }
   
   
-    // const {uploadPercentage} = this.state;
     return (
       <div className="App">
         <input className="input" type="file" onChange={(e) => selectFile(e)} ref={fileInput}/>
