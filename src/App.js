@@ -71,19 +71,19 @@ function App() {
       <div className="App">
         <Dropdown
           placeholder="Select file type"
-          options={['one', 'two', 'three']}
+          options={['application', 'audio', 'image','message','text','video','x-world']}
           onChange={(value) => console.log('change!', value)}
           onSelect={(value) => { 
-            setMimetype(value)
+            setMimetype(value.label)
             console.log('selected!', value)}} // always fires once a selection happens even if there is no change
           onClose={(closedBySelection) => console.log('closedBySelection?:', closedBySelection)}
           onOpen={() => console.log('open!')}
         />
         {/* <input className="input" type="file" onChange={(e) => selectFile(e)} ref={fileInput}/> */}
-        <div class="file-input">
-          <input type="file" id="file" class="file" onChange={(e) => selectFile(e)}/>
-          <label for="file">Select file</label>
-          <p class="file_name">{fileName}</p>
+        <div className="file-input">
+          <input type="file" id="file" className="file" onChange={(e) => selectFile(e)} accept={`${mimetype}/*`}/>
+          <label htmlFor="file">Select file</label>
+          <p className="file_name">{fileName}</p>
           <button className="upload_button" onClick={(e) => uploadFile(e)}> Upload </button>
         </div>
         {/* <button className="select_button" onClick={handleClick}>Select File</button> */}
