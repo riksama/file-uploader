@@ -1,5 +1,5 @@
 import './App.css';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
 import { Dropdown } from 'react-dropdown-now';
@@ -7,24 +7,26 @@ import 'react-dropdown-now/style.css';
 
 function App() {
   const [uploadPercentage,setUploadPercentage] = useState(0)
-  const [selectedFile, setSelectedFile] = useState(null)
+  const [selectedFile, setSelectedFile] = useState("")
   const [resourceUrl,setResourceUrl] = useState("")
-  const fileInput = useRef(null)
+  const [mimetype,setMimetype] = useState("")
+  // const fileInput = useRef(null)
   
 
-  const handleClick = e => {
-    fileInput.current.click();
-  }
+  // const handleClick = e => {
+  //   fileInput.current.click();
+  // }
   
   const selectFile = (e) => {
-    setSelectedFile(e.target.files[0])
-    
+    setSelectedFile(e.target.files[0]) 
   }
+
+  const { name: fileName} = selectedFile;
   
   const uploadFile = () =>{
     console.log(selectedFile)
     let data = new FormData();
-    data.append( 'file', selectedFile );
+    data.append( 'file', selectedFile, fileName );
 
     const options = {
       onUploadProgress: (progressEvent) => {
@@ -71,13 +73,20 @@ function App() {
           placeholder="Select file type"
           options={['one', 'two', 'three']}
           onChange={(value) => console.log('change!', value)}
-          onSelect={(value) => console.log('selected!', value)} // always fires once a selection happens even if there is no change
+          onSelect={(value) => { 
+            setMimetype(value)
+            console.log('selected!', value)}} // always fires once a selection happens even if there is no change
           onClose={(closedBySelection) => console.log('closedBySelection?:', closedBySelection)}
           onOpen={() => console.log('open!')}
-        />;
-        <input className="input" type="file" onChange={(e) => selectFile(e)} ref={fileInput}/>
-        <button className="select_button" onClick={handleClick}>Select File</button>
-        <button className="upload_button" onClick={(e) => uploadFile(e)}> Upload </button>
+        />
+        {/* <input className="input" type="file" onChange={(e) => selectFile(e)} ref={fileInput}/> */}
+        <div class="file-input">
+          <input type="file" id="file" class="file" onChange={(e) => selectFile(e)}/>
+          <label for="file">Select file</label>
+          <p class="file_name">{fileName}</p>
+          <button className="upload_button" onClick={(e) => uploadFile(e)}> Upload </button>
+        </div>
+        {/* <button className="select_button" onClick={handleClick}>Select File</button> */}
         
         <br />
         <span className="progress">{ uploadPercentage > 0 && `${uploadPercentage}%` }</span>
