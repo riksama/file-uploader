@@ -2,6 +2,9 @@ import './App.css';
 import { useRef, useState } from 'react';
 import axios from 'axios';
 
+import { Dropdown } from 'react-dropdown-now';
+import 'react-dropdown-now/style.css';
+
 function App() {
   const [uploadPercentage,setUploadPercentage] = useState(0)
   const [selectedFile, setSelectedFile] = useState(null)
@@ -61,9 +64,17 @@ function App() {
     })
   }
   
-  
+
     return (
       <div className="App">
+        <Dropdown
+          placeholder="Select file type"
+          options={['one', 'two', 'three']}
+          onChange={(value) => console.log('change!', value)}
+          onSelect={(value) => console.log('selected!', value)} // always fires once a selection happens even if there is no change
+          onClose={(closedBySelection) => console.log('closedBySelection?:', closedBySelection)}
+          onOpen={() => console.log('open!')}
+        />;
         <input className="input" type="file" onChange={(e) => selectFile(e)} ref={fileInput}/>
         <button className="select_button" onClick={handleClick}>Select File</button>
         <button className="upload_button" onClick={(e) => uploadFile(e)}> Upload </button>
