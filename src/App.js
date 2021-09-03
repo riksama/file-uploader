@@ -1,6 +1,5 @@
 import './App.css';
 import { useRef, useState } from 'react';
-import {ProgressBar} from 'react-bootstrap';
 import axios from 'axios';
 
 function App() {
@@ -67,12 +66,17 @@ function App() {
     return (
       <div className="App">
         <input className="input" type="file" onChange={(e) => selectFile(e)} ref={fileInput}/>
-        <button onClick={handleClick}>Select File</button>
-        <button onClick={(e) => uploadFile(e)}> Upload </button>
-        { uploadPercentage > 0 && <ProgressBar now={uploadPercentage} active label={`${uploadPercentage}%`} />}
+        <button className="select_button" onClick={handleClick}>Select File</button>
+        <button className="upload_button" onClick={(e) => uploadFile(e)}> Upload </button>
+        
         <br />
-        <span>The file is available here:</span>
-        <a href={resourceUrl}>Click Here</a>
+        <span className="progress">{ uploadPercentage > 0 && `${uploadPercentage}%` }</span>
+        <br />
+        { uploadPercentage === 100 && 
+        <div className="download" >
+          <span className="text">The file is available here:</span>
+          <a href={resourceUrl}>Click Here</a>
+        </div>}
       </div>
     );
   }
