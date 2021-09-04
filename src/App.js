@@ -7,22 +7,18 @@ import 'react-dropdown-now/style.css';
 
 function App() {
   const [uploadPercentage,setUploadPercentage] = useState(0)
-  const [selectedFile, setSelectedFile] = useState("")
+  const [selectedFile, setSelectedFile] = useState(null)
   const [resourceUrl,setResourceUrl] = useState("")
   const [mimetype,setMimetype] = useState("")
-  // const fileInput = useRef(null)
-  
-
-  // const handleClick = e => {
-  //   fileInput.current.click();
-  // }
   
   const selectFile = (e) => {
     setSelectedFile(e.target.files[0]) 
   }
-
-  const { name: fileName} = selectedFile;
   
+  if(selectedFile){
+  var { name: fileName} = selectedFile;
+  }
+    
   const uploadFile = () =>{
     console.log(selectedFile)
     let data = new FormData();
@@ -79,14 +75,12 @@ function App() {
           onClose={(closedBySelection) => console.log('closedBySelection?:', closedBySelection)}
           onOpen={() => console.log('open!')}
         />
-        {/* <input className="input" type="file" onChange={(e) => selectFile(e)} ref={fileInput}/> */}
         <div className="file-input">
           <input type="file" id="file" className="file" onChange={(e) => selectFile(e)} accept={`${mimetype}/*`}/>
           <label htmlFor="file">Select file</label>
           <p className="file_name">{fileName}</p>
           <button className="upload_button" onClick={(e) => uploadFile(e)}> Upload </button>
         </div>
-        {/* <button className="select_button" onClick={handleClick}>Select File</button> */}
         
         <br />
         <span className="progress">{ uploadPercentage > 0 && `${uploadPercentage}%` }</span>
